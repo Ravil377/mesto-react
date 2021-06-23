@@ -9,7 +9,7 @@ function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-    const [selectedCard, setSelectedCard] = React.useState("");
+    const [selectedCard, setSelectedCard] = React.useState(null);
 
     const handleEditProfileClick = () => setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
     const handleAddPlaceClick = () => setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
@@ -21,21 +21,11 @@ function App() {
         setIsEditProfilePopupOpen(false);
         setIsAddPlacePopupOpen(false);
         setIsEditAvatarPopupOpen(false);
-        setSelectedCard("");
+        setSelectedCard(null);
     };
 
     return (
         <>
-            <div className="popup popup_gallery">
-                <div className="full-image">
-                    <button type="button" className="popup__button-close"></button>
-                    <figure className="full-image__container">
-                        <img src="#" alt=" " className="full-image__image" />
-                        <figcaption className="full-image__caption"></figcaption>
-                    </figure>
-                </div>
-            </div>
-
             <div className="page">
                 <Header />
                 <Main onEditAvatar={handleEditAvatarClick} onAddPlace={handleAddPlaceClick} onEditProfile={handleEditProfileClick} onCardClick={handleCardClick} />
@@ -72,9 +62,10 @@ function App() {
                         </button>
                     </>
                 </PopupWithForm>
-
-                <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-
+                
+                {selectedCard && 
+                    <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
+                }
                 <Footer />
             </div>
         </>

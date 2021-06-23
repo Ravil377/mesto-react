@@ -28,7 +28,6 @@ function Main(props) {
     }, []);
 
     return (
-        <>
             <main className="main">
                 <section className="profile">
                     <div className="profile__avatar-container" onClick={props.onEditAvatar}>
@@ -52,7 +51,6 @@ function Main(props) {
                     </ul>
                 </section>
             </main>
-        </>
     );
 }
 
