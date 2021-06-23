@@ -9,7 +9,9 @@ function PopupWithForm(props) {
         const handleClosePopupOnEsc = (e) => {
             if (e.code === "Escape") props.onClose();
         }
-        document.addEventListener('keyup', handleClosePopupOnEsc);
+        if (props.isOpen) {
+            document.addEventListener('keyup', handleClosePopupOnEsc);
+          } 
         return () => document.removeEventListener('keyup', handleClosePopupOnEsc);
     });
 
