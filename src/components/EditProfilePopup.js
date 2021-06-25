@@ -31,12 +31,12 @@ function EditProfilePopup(props) {
             <input type="text" name="name" 
                 placeholder="Имя" id="fio-input" 
                 className="popup__input popup__input_type_name" 
-                minLength="2" maxLength="40" value={name} onChange={handleChangeName} 
+                minLength="2" maxLength="40" value={name || ''} onChange={handleChangeName} 
                 required />
             <span className="popup__input-error fio-input-error"></span>
             <input type="text" name="about" placeholder="О себе" 
                 id="info-input" className="popup__input popup__input_type_info" 
-                minLength="2" maxLength="200" value={about} onChange={handleChangeDescription}
+                minLength="2" maxLength="200" value={about || ''} onChange={handleChangeDescription}
                 required />
             <span className="popup__input-error info-input-error"></span>
             <button type="submit" 
