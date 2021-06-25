@@ -1,6 +1,6 @@
 import React from "react";
 import PopupConfirmationDelete from "./PopupConfirmationDelete";
-import { currentUserContext } from './contexts/CurrentUserContext';
+import { currentUserContext } from '../contexts/CurrentUserContext';
 
 function Card(props) {
     const [isConfirmationDelete, setIsConfirmationDelete] = React.useState(false);
