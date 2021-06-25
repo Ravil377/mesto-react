@@ -58,20 +58,10 @@ class Api {
             }),
         }).then((res) => this._answerForServer(res));
     }
-
-    likeAdd(id) {
+    changeLikeCardStatus(id, isLiked) {
+        const methodParametr = isLiked ? "DELETE" : "PUT";
         return fetch(`${this._options.baseUrl}/cards/likes/${id}`, {
-            method: "PUT",
-            headers: {
-                authorization: `${this._options.authorization}`,
-                "Content-Type": "application/json",
-            },
-        }).then((res) => this._answerForServer(res));
-    }
-
-    deleteLike(id) {
-        return fetch(`${this._options.baseUrl}/cards/likes/${id}`, {
-            method: "DELETE",
+            method: methodParametr,
             headers: {
                 authorization: `${this._options.authorization}`,
                 "Content-Type": "application/json",

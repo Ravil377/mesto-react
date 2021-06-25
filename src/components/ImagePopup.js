@@ -3,16 +3,16 @@ import React from "react";
 function ImagePopup(props) {
     const handlePopupClose = (e) => {
         if (e.target === e.currentTarget) props.onClose();
-    }
+    };
 
     React.useEffect(() => {
         const handleClosePopupOnEsc = (e) => {
             if (e.code === "Escape") props.onClose();
-        }
+        };
         if (props.card) {
-            document.addEventListener('keyup', handleClosePopupOnEsc);
-          } 
-        return () => document.removeEventListener('keyup', handleClosePopupOnEsc);
+            document.addEventListener("keyup", handleClosePopupOnEsc);
+        }
+        return () => document.removeEventListener("keyup", handleClosePopupOnEsc);
     });
 
     return (
