@@ -1,7 +1,7 @@
 import React from "react";
 import pencil from "./../images/pencil.png";
 import Card from "./Card";
-import { currentUserContext } from "./contexts/CurrentUserContext";
+import { currentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
     const currentUser = React.useContext(currentUserContext);
