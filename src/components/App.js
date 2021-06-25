@@ -13,8 +13,8 @@ function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-    const [currentUser, setCurrentUser] = React.useState(null);
-    const [selectedCard, setSelectedCard] = React.useState(null);
+    const [currentUser, setCurrentUser] = React.useState([]);
+    const [selectedCard, setSelectedCard] = React.useState();
     const [cards, setCards] = React.useState([]);
 
     React.useEffect(() => {
@@ -118,7 +118,7 @@ function App() {
                         onCardLike={handleCardLike}
                         onCardDelete={handleDeleteClick}
                     />
-                    {currentUser && <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />}
+                    <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
                     <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
                     <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
                     {selectedCard && <ImagePopup card={selectedCard} onClose={closeAllPopups} />}
