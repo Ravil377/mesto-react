@@ -1,10 +1,8 @@
 import React from "react";
-import PopupConfirmationDelete from "./PopupConfirmationDelete";
-import { currentUserContext } from '../contexts/CurrentUserContext';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Card(props) {
-    const [isConfirmationDelete, setIsConfirmationDelete] = React.useState(false);
-    const currentUser = React.useContext(currentUserContext);
+    const currentUser = React.useContext(CurrentUserContext);
     const isOwn = props.card.owner._id === currentUser._id;
     const isLiked = props.card.likes.some(i => i._id === currentUser._id);
 
@@ -15,30 +13,24 @@ function Card(props) {
     const cardLikeButtonClassName = (
         `element__like-button ${isLiked && 'element__like-button_active'}`
     );
+    
+    const handleDeleteClick = () => {
+        props.onCardDeleteClick(props.card)
+    }
 
     const handleClick = (e) => {
-        if(!e.target.classList.contains('element__like-button') && !e.target.classList.contains('element__delete-button')) props.onCardClick(props.card);
-    }
-
-    const handleDeleteClick = () => {
-        setIsConfirmationDelete(true);      
-    }
-
-    const handleClickYes = () => {
-        props.onCardDeleteClick(props.card);  
+        props.onCardClick(props.card);
     }
 
     const handleLikeClick = () => {
         props.onCardLike(props.card);
-        setIsConfirmationDelete(false);
     }
 
     return (
         <>
-        <PopupConfirmationDelete isOpen={isConfirmationDelete} onYes={handleClickYes}/>
-        <li className="element" onClick={handleClick}>
+        <li className="element">
             <button type="button" className={cardDeleteButtonClassName} onClick={handleDeleteClick}></button>
-            <img src={props.card.link} className="element__image" alt={props.card.name} id="image" />
+            <img src={props.card.link} className="element__image" alt={props.card.name} id="image" onClick={handleClick} />
             <div className="element__down-sector">
                 <h2 className="element__title">{props.card.name}</h2>
                 <div className="element__like">

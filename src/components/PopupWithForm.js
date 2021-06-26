@@ -12,8 +12,10 @@ function PopupWithForm(props) {
         if (props.isOpen) {
             document.addEventListener('keyup', handleClosePopupOnEsc);
           } 
-        return () => document.removeEventListener('keyup', handleClosePopupOnEsc);
-    });
+        return () => {
+            document.removeEventListener('keyup', handleClosePopupOnEsc);
+        }
+    }, [props.isOpen]);
 
     return (
         <>
@@ -21,8 +23,12 @@ function PopupWithForm(props) {
                 <div className="popup__container">
                     <button type="button" className="popup__button-close" onClick={props.onClose}></button>
                     <h2 className="popup__container-title">{props.title}</h2>
-                    <form name={props.name} className={`form ${props.name}`} onSubmit={props.onSubmit} noValidate>
+                    <form name={props.name} className={`form ${props.name}`} onSubmit={props.onSubmit}>
                         {props.children}
+                    <button type="submit" 
+                        className="popup__container-submit-button popup__container-submit-button_edit-button">
+                        Сохранить
+                    </button>
                     </form>
                 </div>
             </div>
