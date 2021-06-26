@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/mesto-react/static/css/main.ed2ba12d.chunk.css",
-    "main.js": "/mesto-react/static/js/main.e197b977.chunk.js",
-    "main.js.map": "/mesto-react/static/js/main.e197b977.chunk.js.map",
+    "main.js": "/mesto-react/static/js/main.c7fd3725.chunk.js",
+    "main.js.map": "/mesto-react/static/js/main.c7fd3725.chunk.js.map",
     "runtime-main.js": "/mesto-react/static/js/runtime-main.8323ce7a.js",
     "runtime-main.js.map": "/mesto-react/static/js/runtime-main.8323ce7a.js.map",
     "static/js/2.8dc5a6f0.chunk.js": "/mesto-react/static/js/2.8dc5a6f0.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.8323ce7a.js",
     "static/js/2.8dc5a6f0.chunk.js",
     "static/css/main.ed2ba12d.chunk.css",
-    "static/js/main.e197b977.chunk.js"
+    "static/js/main.c7fd3725.chunk.js"
   ]
 }
