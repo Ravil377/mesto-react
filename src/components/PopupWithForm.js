@@ -5,10 +5,6 @@ function PopupWithForm(props) {
         if (e.target === e.currentTarget) props.onClose();
     }
 
-    const formReset = () => {
-        document.querySelector(`.${props.name}`).reset();
-    }
-
     React.useEffect(() => {
         const handleClosePopupOnEsc = (e) => {
             if (e.code === "Escape") props.onClose();
@@ -19,11 +15,11 @@ function PopupWithForm(props) {
         return () => {
             document.removeEventListener('keyup', handleClosePopupOnEsc);
         }
-    }, [props.isOpen]);
+    }, [props, props.isOpen]);
 
     React.useEffect(() => {
-        formReset();
-    }, [props.isOpen])
+        document.querySelector(`.${props.name}`).reset();
+    }, [props, props.isOpen])
 
     return (
         <>
