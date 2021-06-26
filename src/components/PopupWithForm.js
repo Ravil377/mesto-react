@@ -15,11 +15,11 @@ function PopupWithForm(props) {
         return () => {
             document.removeEventListener('keyup', handleClosePopupOnEsc);
         }
-    }, [props.isOpen]);
+    }, [props, props.isOpen]);
 
     React.useEffect(() => {
         document.querySelector(`.${props.name}`).reset();
-    }, [props.isOpen])
+    }, [props.name, props.isOpen])
 
     return (
         <>
