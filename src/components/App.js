@@ -4,17 +4,20 @@ import Main from "./Main";
 import Footer from "./Footer";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
-import { currentUserContext } from "../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import PopupConfirmationDelete from "./PopupConfirmationDelete";
 
 function App() {
+    const [isConfirmationDelete, setIsConfirmationDelete] = React.useState(false);
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-    const [currentUser, setCurrentUser] = React.useState([]);
+    const [currentUser, setCurrentUser] = React.useState({});
     const [selectedCard, setSelectedCard] = React.useState();
+    const [selectedCardForDelete, setSelectedCardForDelete] = React.useState([]);
     const [cards, setCards] = React.useState([]);
 
     React.useEffect(() => {
@@ -31,19 +34,19 @@ function App() {
             .catch((err) => console.log(err));
     }, []);
 
-    React.useEffect(() => {
-        api.getInitialCards()
+    const handleDeleteCard = () => {
+        api.deleteCard(selectedCardForDelete._id)
             .then((res) => {
-                setCards(res);
+                setCards(() => cards.filter((card) => card._id !== selectedCardForDelete._id));
+                setIsConfirmationDelete(false);
             })
             .catch((err) => console.log(err));
-    }, []);
-
-    const handleDeleteClick = (props) => {
-        api.deleteCard(props._id)
-            .then((res) => setCards(() => cards.filter((card) => card._id !== props._id)))
-            .catch((err) => console.log(err));
     };
+
+    const handleDeleteClick = (card) => {
+        setSelectedCardForDelete(card);
+        setIsConfirmationDelete(true);
+    }
 
     const handleCardLike = (props) => {
         const isLiked = props.likes.some((i) => i._id === currentUser._id);
@@ -55,21 +58,15 @@ function App() {
     };
 
     const handleEditProfileClick = () => {
-        setIsEditProfilePopupOpen((state) => {
-            return { isEditProfilePopupOpen: !state };
-        });
+        setIsEditProfilePopupOpen((state) => !state);
     };
 
     const handleAddPlaceClick = () => {
-        setIsAddPlacePopupOpen((state) => {
-            return { isAddPlacePopupOpen: !state };
-        });
+        setIsAddPlacePopupOpen((state) => !state);
     };
 
     const handleEditAvatarClick = () => {
-        setIsEditAvatarPopupOpen((state) => {
-            return { isEditAvatarPopupOpen: !state };
-        });
+        setIsEditAvatarPopupOpen((state) => !state);
     };
 
     const handleCardClick = (elem) => setSelectedCard(elem);
@@ -78,35 +75,41 @@ function App() {
         setIsEditProfilePopupOpen(false);
         setIsAddPlacePopupOpen(false);
         setIsEditAvatarPopupOpen(false);
+        setIsConfirmationDelete(false);
         setSelectedCard(null);
+        setSelectedCardForDelete(null);
     };
 
     const handleUpdateUser = (name, about) => {
         api.postProfileInfo(name, about)
-            .then((res) => setCurrentUser(res))
+            .then((res) => {
+                setCurrentUser(res);
+                setIsEditProfilePopupOpen(false);
+            })
             .catch((err) => console.log(err));
-        setIsEditProfilePopupOpen(false);
     };
 
     const handleUpdateAvatar = (avatar) => {
         api.postProfileAvatar(avatar)
-            .then((res) => setCurrentUser(res))
+            .then((res) => {
+                setCurrentUser(res);
+                setIsEditAvatarPopupOpen(false);
+            })
             .catch((err) => console.log(err));
-        setIsEditAvatarPopupOpen(false);
     };
 
     const handleAddPlaceSubmit = (nameCard, linkCard) => {
         api.postCard(nameCard, linkCard)
             .then((newCard) => {
                 setCards([newCard, ...cards]);
+                setIsAddPlacePopupOpen(false);
             })
             .catch((err) => console.log(err));
-        setIsAddPlacePopupOpen(false);
     };
 
     return (
         <>
-            <currentUserContext.Provider value={currentUser}>
+            <CurrentUserContext.Provider value={currentUser}>
                 <div className="page">
                     <Header />
                     <Main
@@ -121,10 +124,11 @@ function App() {
                     <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
                     <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
                     <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
-                    {selectedCard && <ImagePopup card={selectedCard} onClose={closeAllPopups} />}
+                    <PopupConfirmationDelete isOpen={isConfirmationDelete} onClose={closeAllPopups} onYes={handleDeleteCard} />
+                    <ImagePopup card={selectedCard} onClose={closeAllPopups} />
                     <Footer />
                 </div>
-            </currentUserContext.Provider>
+            </CurrentUserContext.Provider>
         </>
     );
 }
