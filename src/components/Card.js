@@ -30,7 +30,7 @@ function Card(props) {
         <>
         <li className="element">
             <button type="button" className={cardDeleteButtonClassName} onClick={handleDeleteClick}></button>
-            <img src={props.card.link} className="element__image" alt={props.card.name} id="image" onClick={handleClick} />
+            <img src={props.card.link} className="element__image" alt={props.card.name} onClick={handleClick} />
             <div className="element__down-sector">
                 <h2 className="element__title">{props.card.name}</h2>
                 <div className="element__like">
