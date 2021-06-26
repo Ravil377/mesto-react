@@ -17,10 +17,6 @@ function PopupWithForm(props) {
         }
     }, [props, props.isOpen]);
 
-    React.useEffect(() => {
-        document.querySelector(`.${props.name}`).reset();
-    }, [props.name, props.isOpen])
-
     return (
         <>
             <div className={`popup popup_${props.name} ${props.isOpen && "popup_opened"}`} onClick={handlePopupClose}>
