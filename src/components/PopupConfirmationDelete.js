@@ -15,7 +15,7 @@ function PopupConfirmationDelete(props) {
         return () => {
             document.removeEventListener('keyup', handleClosePopupOnEsc);
         }
-    }, [props, props.isOpen]);
+    }, [props.isOpen]);
 
     return (
         <div className={`popup popup_imageDelete ${props.isOpen && "popup_opened"}`} onClick={handlePopupClose}>
